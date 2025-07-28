@@ -4,9 +4,9 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const StatisticLine = ({statistic, text}) => {
     if (text == "positive") {
-        return <div>{text} {statistic}%</div>
+        return <tr><td>{text}</td><td>{statistic} %</td></tr>
     }
-    return <div>{text} {statistic}</div>
+    return <tr><td>{text}</td><td>{statistic}</td></tr>
 }
 
 const Statistics = (props) => {
@@ -14,12 +14,16 @@ const Statistics = (props) => {
         return (
             <>
             <h1>statistics</h1>
-            <StatisticLine statistic={props.good} text="good"/>
-            <StatisticLine statistic={props.neutral} text="neutral"/>
-            <StatisticLine statistic={props.bad} text="bad"/>
-            <StatisticLine statistic={(props.good + props.bad*(-1))/(props.good + props.neutral + props.bad)} text="average"/>
-            <StatisticLine statistic={props.good/(props.good + props.neutral + props.bad)*100} text="positive"/>
-            <StatisticLine statistic={props.good + props.neutral + props.bad} text="all"/>
+            <table>
+                <tbody>
+                    <StatisticLine statistic={props.good} text="good"/>
+                    <StatisticLine statistic={props.neutral} text="neutral"/>
+                    <StatisticLine statistic={props.bad} text="bad"/>
+                    <StatisticLine statistic={props.good + props.neutral + props.bad} text="all"/>
+                    <StatisticLine statistic={(props.good + props.bad*(-1))/(props.good + props.neutral + props.bad)} text="average"/>
+                    <StatisticLine statistic={props.good/(props.good + props.neutral + props.bad)*100} text="positive"/>
+                </tbody>
+            </table>
             </>
         )
     }
