@@ -2,66 +2,43 @@ import { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const StatisticLine = ({statistic, text}) => {
-    if (text == "positive") {
-        return <tr><td>{text}</td><td>{statistic} %</td></tr>
-    }
-    return <tr><td>{text}</td><td>{statistic}</td></tr>
-}
-
-const Statistics = (props) => {
-    if (props.good + props.neutral + props.bad != 0) {
-        return (
-            <>
-            <h1>statistics</h1>
-            <table>
-                <tbody>
-                    <StatisticLine statistic={props.good} text="good"/>
-                    <StatisticLine statistic={props.neutral} text="neutral"/>
-                    <StatisticLine statistic={props.bad} text="bad"/>
-                    <StatisticLine statistic={props.good + props.neutral + props.bad} text="all"/>
-                    <StatisticLine statistic={(props.good + props.bad*(-1))/(props.good + props.neutral + props.bad)} text="average"/>
-                    <StatisticLine statistic={props.good/(props.good + props.neutral + props.bad)*100} text="positive"/>
-                </tbody>
-            </table>
-            </>
-        )
-    }
-    return (
-        <>
-        <br />
-        <div>No feedback given</div>
-        </>
-    )
-}
-
 const App = () => {
-    // save clicks of each button to its own state
-    const [good, setGood] = useState(0)
-    const [neutral, setNeutral] = useState(0)
-    const [bad, setBad] = useState(0)
+    const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+    ]
   
-    const addGoodFeedback = () => {
-        const updatedGood = good + 1
-        setGood(updatedGood)
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
     }
-    const addNeutralFeedback = () => {
-        const updatedNeutral = neutral + 1
-        setNeutral(updatedNeutral)
+
+    const [selected, setSelected] = useState(0)
+    const randomizeAnecdote = () => {
+        const randomAnecdote = getRandomInt(anecdotes.length)
+        setSelected(randomAnecdote)
     }
-    const addBadFeedback = () => {
-        const updatedBad = bad + 1
-        setBad(updatedBad)
+
+    const [votes, setVotes] = useState(Array.apply(null, Array(anecdotes.length)).map(function (x) { return 0; }))
+
+    const voteAnecdote = () => {
+        const votesCopy = [...votes]
+        votesCopy[selected] += 1     
+        setVotes(votesCopy)
     }
+
     return (
         <div>
-        <h1>give feedback</h1>
-        <div>
-            <Button onClick={addGoodFeedback} text='good'/>  
-            <Button onClick={addNeutralFeedback} text='neutral'/>
-            <Button onClick={addBadFeedback} text='bad'/>
-        </div>
-        <Statistics good={good} neutral={neutral} bad={bad}/>
+            <h1>Anecdote of the day</h1>
+            <div>{anecdotes[selected]}</div>
+            <div>has {votes[selected]} votes</div>
+            <Button onClick={voteAnecdote} text='vote'/>
+            <Button onClick={randomizeAnecdote} text='next anecdote'/>
         </div>
     )
 }
