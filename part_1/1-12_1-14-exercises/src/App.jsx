@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+const PopularAnecdote = ({anecdote}) => <div>{anecdote}</div>
 
 const App = () => {
     const anecdotes = [
@@ -32,6 +33,12 @@ const App = () => {
         setVotes(votesCopy)
     }
 
+    function getMostPopularAnecdote() {
+        const max = Math.max(...votes);
+        const maxIndex = votes.indexOf(max);
+        return anecdotes[maxIndex]
+    }
+
     return (
         <div>
             <h1>Anecdote of the day</h1>
@@ -39,6 +46,8 @@ const App = () => {
             <div>has {votes[selected]} votes</div>
             <Button onClick={voteAnecdote} text='vote'/>
             <Button onClick={randomizeAnecdote} text='next anecdote'/>
+            <h1>Anecdote with the most votes</h1> 
+            <PopularAnecdote anecdote={getMostPopularAnecdote()}/>          
         </div>
     )
 }
