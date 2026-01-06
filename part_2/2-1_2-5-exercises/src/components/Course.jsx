@@ -1,11 +1,14 @@
-import Header from './components/Header'
-import Content from './components/Content'
+import Header from './Header'
+import Content from './Content'
+import Total from './Total'
 
-const Content = ({course}) => {
-    <div id={course.id}>
-        <Header name = {name} />
-        <Content parts = {course.parts} />
-    </div>
-
+const Course = ({course}) => {
+    return(
+        <div id={course.id}>
+            <Header name = {course.name} />
+            <Content parts = {course.parts} />
+            <Total parts = {course.parts} />
+        </div>
+    )
 }
 export default Course

@@ -21,10 +21,14 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redeux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
-
   return <Course course={course} />
 }
 
