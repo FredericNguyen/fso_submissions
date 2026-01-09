@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import Person from './components/Person'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -32,7 +34,7 @@ const App = () => {
 
     }
     const findPerson = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setsearchPerson(event.target.value)
     }
     const handleNameChange = (event) => {
@@ -46,39 +48,20 @@ const App = () => {
     }
 
     const foundPeople = persons.filter((person) => person.name.toLowerCase().includes(searchPerson.toLowerCase()))
-    console.log(foundPeople)
     return (
         <div>
             <h2>Phonebook</h2>
-            <p> filter shown with 
-                <input type="search"
-                    value={searchPerson}
-                    onChange={findPerson}
-                />
-            </p>
-            <form onSubmit={addPerson}>
-                <div>
-                    name: <input
-                        value={newName}
-                        onChange={handleNameChange}
-                    />
-                </div>
-                <div>
-                    number: <input
-                        value={newNumber}
-                        onChange={handleNumberChange}
-                    />
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
-            <h2>Numbers</h2>
-            <ul>
-                {foundPeople.map(person =>
-                    <Person key={person.id} person={person} />
-                )}
-            </ul>
+            <Filter searchPerson={searchPerson} findPerson={findPerson} />
+            <h3>Add a new</h3>
+            <PersonForm
+                addPerson={addPerson}
+                newName={newName}
+                handleNameChange={handleNameChange}
+                newNumber={newNumber}
+                handleNumberChange={handleNumberChange}
+            />
+            <h3>Numbers</h3>
+            <Persons foundPeople={foundPeople} />
         </div>
     )
 }
