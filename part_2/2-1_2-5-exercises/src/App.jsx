@@ -1,7 +1,5 @@
 import Curriculum from './components/Curriculum'
 
-// const Total = (props) => <p>Number of exercises {props.total}</p>
-
 const App = () => {
   const courses = [
     {
