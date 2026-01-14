@@ -39,37 +39,40 @@ const App = () => {
         }
 
     }
-        const findPerson = (event) => {
-            // console.log(event.target.value)
-            setsearchPerson(event.target.value)
-        }
-        const handleNameChange = (event) => {
-            // console.log(event.target.value)
-            setNewName(event.target.value)
-        }
 
-        const handleNumberChange = (event) => {
-            // console.log(event.target.value)
-            setNewNumber(event.target.value)
-        }
-
-        const foundPeople = persons.filter((person) => person.name.toLowerCase().includes(searchPerson.toLowerCase()))
-        return (
-            <div>
-                <h2>Phonebook</h2>
-                <Filter searchPerson={searchPerson} findPerson={findPerson} />
-                <h3>Add a new</h3>
-                <PersonForm
-                    addPerson={addPerson}
-                    newName={newName}
-                    handleNameChange={handleNameChange}
-                    newNumber={newNumber}
-                    handleNumberChange={handleNumberChange}
-                />
-                <h3>Numbers</h3>
-                <Persons foundPeople={foundPeople} />
-            </div>
-        )
+    const deletePersonFE = (id)  => {
+        setPersons(persons.filter(p => p.id !== id))
     }
 
-    export default App
+    const findPerson = (event) => {
+        setsearchPerson(event.target.value)
+    }
+
+    const handleNameChange = (event) => {
+        setNewName(event.target.value)
+    }
+
+    const handleNumberChange = (event) => {
+        setNewNumber(event.target.value)
+    }
+
+    const foundPeople = persons.filter((person) => person.name.toLowerCase().includes(searchPerson.toLowerCase()))
+    return (
+        <div>
+            <h2>Phonebook</h2>
+            <Filter searchPerson={searchPerson} findPerson={findPerson} />
+            <h3>Add a new</h3>
+            <PersonForm
+                addPerson={addPerson}
+                newName={newName}
+                handleNameChange={handleNameChange}
+                newNumber={newNumber}
+                handleNumberChange={handleNumberChange}
+            />
+            <h3>Numbers</h3>
+            <Persons foundPeople={foundPeople} deletePersonFE={deletePersonFE}/>
+        </div>
+    )
+}
+
+export default App
