@@ -23,7 +23,17 @@ const App = () => {
         const isDuplicate =
             persons.some((person) => person.name == newName);
         if (isDuplicate) {
-            alert(`${newName} is already added to phonebook`)
+            if (persons.some((person) => person.name == newName && person.number == newNumber)) {
+                alert(`${newName} is already added to phonebook with the number ${newNumber}`)
+            } else if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                const person = persons.find(p => p.name === newName)
+                const changedPerson = { ...person, number: newNumber }
+                personService
+                    .update(changedPerson.id, changedPerson)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id === changedPerson.id ? returnedPerson : person))
+                    })
+            }
         } else {
             const personObject = {
                 name: newName,
@@ -40,7 +50,7 @@ const App = () => {
 
     }
 
-    const deletePersonFE = (id)  => {
+    const deletePersonFE = (id) => {
         setPersons(persons.filter(p => p.id !== id))
     }
 
@@ -70,7 +80,7 @@ const App = () => {
                 handleNumberChange={handleNumberChange}
             />
             <h3>Numbers</h3>
-            <Persons foundPeople={foundPeople} deletePersonFE={deletePersonFE}/>
+            <Persons foundPeople={foundPeople} deletePersonFE={deletePersonFE} />
         </div>
     )
 }
