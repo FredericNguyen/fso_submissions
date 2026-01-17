@@ -1,7 +1,7 @@
-const Filter = ({searchPerson, findPerson}) => <p> filter shown with 
+const Filter = ({searchCountry, findCountry}) => <p> find countries 
     <input type="search"
-        value={searchPerson}
-        onChange={findPerson}
+        value={searchCountry}
+        onChange={findCountry}
     />
 </p>
 
