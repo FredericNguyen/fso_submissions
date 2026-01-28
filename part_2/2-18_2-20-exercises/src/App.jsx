@@ -10,7 +10,7 @@ const App = () => {
     const [searchCountry, setsearchCountry] = useState("")
     const [message, setMessage] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
-    const [singleCountry, setSingleCountry] = useState(false)
+    const [countryViews, setCountryViews] = useState(null)
 
 
     useEffect(() => {
@@ -22,14 +22,9 @@ const App = () => {
                     if (foundCountries.length > 10) {
                         setMessage("Too many matches, specify another filter")
                         setCountries([])
-                        setSingleCountry(false)
                     } else {
                         setMessage(null)
-                        if (foundCountries.length == 1) {
-                            setSingleCountry(true)
-                        } else {
-                            setSingleCountry(false)
-                        }
+                        setCountryViews(Array.from({length: foundCountries.length}, () => false))
                         setCountries(foundCountries)
                     }
                 })
@@ -46,7 +41,7 @@ const App = () => {
             <Filter searchCountry={searchCountry} findCountry={findCountry} />
             <Notification message={message} />
             <ErrorMessage message={errorMessage} />
-            <Countries countries={countries} singleCountry={singleCountry}/>
+            <Countries countries={countries} countryViews={countryViews} setCountryViews={setCountryViews} />
         </div>
     )
 }

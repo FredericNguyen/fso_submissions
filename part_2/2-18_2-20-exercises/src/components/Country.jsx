@@ -1,6 +1,8 @@
-const Country = ({ country, singleCountry }) => {
+import CountryViewButton from './CountryViewButton'
 
-    if (singleCountry) {
+const Country = ({ country, countryViews, setCountryViews, indexCountry }) => {
+
+    if (countryViews[indexCountry]) {
         return (
             <div>
                 <h1>{country.name.common}</h1>
@@ -17,13 +19,15 @@ const Country = ({ country, singleCountry }) => {
                     }
                 </ul>
                 <p></p>
-                <img src={country.flags.png} alt="Flag of country"/>
+                <img src={country.flags.png} alt={country.flags.alt}/>
+                <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews}/>
             </div>
         )
     }
     return (
         <div>
             {country.name.common}
+            <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews}/>
         </div>
     )
 
