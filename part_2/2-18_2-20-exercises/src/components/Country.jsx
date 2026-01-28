@@ -19,15 +19,15 @@ const Country = ({ country, countryViews, setCountryViews, indexCountry }) => {
                     }
                 </ul>
                 <p></p>
-                <img src={country.flags.png} alt={country.flags.alt}/>
-                <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews}/>
+                <img src={country.flags.png} alt={country.flags.alt} />
+                <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews} />
             </div>
         )
     }
     return (
         <div>
             {country.name.common}
-            <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews}/>
+            <CountryViewButton countryViews={countryViews} indexCountry={indexCountry} setCountryViews={setCountryViews} />
         </div>
     )
 

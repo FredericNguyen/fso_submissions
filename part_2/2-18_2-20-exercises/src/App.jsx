@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Filter from './components/Filter'
-import Countries from './components/Countries'
+import CountriesDisplay from './components/CountriesDisplay'
 import Notification from './components/Notification'
 import ErrorMessage from './components/ErrorMessage'
 
@@ -11,6 +11,8 @@ const App = () => {
     const [message, setMessage] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
     const [countryViews, setCountryViews] = useState(null)
+    const [singleCountry, setSingleCountry] = useState(false)
+    const [weather, setWeather] = useState(null)
 
 
     useEffect(() => {
@@ -21,10 +23,26 @@ const App = () => {
                     const foundCountries = response.data.filter((country) => country.name.common.toLowerCase().includes(searchCountry.toLowerCase()))
                     if (foundCountries.length > 10) {
                         setMessage("Too many matches, specify another filter")
+                        setSingleCountry(false)
                         setCountries([])
                     } else {
                         setMessage(null)
-                        setCountryViews(Array.from({length: foundCountries.length}, () => false))
+                        if (foundCountries.length == 1) {
+                            const apiKey = import.meta.env.VITE_WEATHER_KEY;
+                            const city = foundCountries[0].capital
+                            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+
+                            axios
+                                .get(url)
+                                .then(response => {
+                                    setWeather(response.data)
+                                    setSingleCountry(true)
+                                }
+                                )
+                        } else {
+                            setSingleCountry(false)
+                            setCountryViews(Array.from({ length: foundCountries.length }, () => false))
+                        }
                         setCountries(foundCountries)
                     }
                 })
@@ -41,7 +59,7 @@ const App = () => {
             <Filter searchCountry={searchCountry} findCountry={findCountry} />
             <Notification message={message} />
             <ErrorMessage message={errorMessage} />
-            <Countries countries={countries} countryViews={countryViews} setCountryViews={setCountryViews} />
+            <CountriesDisplay weather={weather} singleCountry={singleCountry} countries={countries} countryViews={countryViews} setCountryViews={setCountryViews} />
         </div>
     )
 }
