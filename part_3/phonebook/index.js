@@ -1,3 +1,4 @@
+
 const express = require('express')
 const app = express()
 
@@ -27,14 +28,22 @@ let phonebook = [
 app.use(express.json())
 
 app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
+    response.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(phonebook)
+    response.json(phonebook)
+})
+
+app.get('/info', (request, response) => {
+    response.setHeader("date", new Date().toString())
+    response.send(`
+            <p>Phonebook has info for ${phonebook.length} people.</p>
+            <p>${response.get("date")}</p>
+        `)
 })
 
 const PORT = 3001
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 })
