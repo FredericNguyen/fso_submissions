@@ -7,7 +7,7 @@
         "start": "node index.js",
         "dev": "node --watch index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build:ui": "rm -rf dist && cd ../../part_2/2-6_2-17-exercises && npm -v && npm run build && cp -r dist ../../part_3/phonebook",
+        "build:ui": "rm -rf dist && cd ../../part_2/2-6_2-17-exercises && npm run build && cp -r dist ../../part_3/phonebook",
         "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
     },
     "author": "Frederic Nguyen",
